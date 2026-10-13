@@ -65,16 +65,22 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Audit log
-    await prisma.auditLog.create({
-      data: {
-        actorId: (session.user as any).id,
-        action: "CREATE_TRIP",
-        entityType: "Trip",
-        entityId: trip.id,
-        details: JSON.stringify({ title, status }),
-      },
-    });
+    // Audit log (safe)
+    try {
+      if ((session.user as any)?.id) {
+        await prisma.auditLog.create({
+          data: {
+            actorId: (session.user as any).id,
+            action: "CREATE_TRIP",
+            entityType: "Trip",
+            entityId: trip.id,
+            details: JSON.stringify({ title, status }),
+          },
+        });
+      }
+    } catch (auditErr) {
+      console.warn("Audit log creation skipped:", auditErr);
+    }
 
     return NextResponse.json(trip, { status: 201 });
   } catch (e: any) {

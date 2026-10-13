@@ -48,15 +48,21 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       data: updateData,
     });
 
-    await prisma.auditLog.create({
-      data: {
-        actorId: (session.user as any).id,
-        action: "UPDATE_TRIP",
-        entityType: "Trip",
-        entityId: params.id,
-        details: JSON.stringify(body),
-      },
-    });
+    try {
+      if ((session.user as any)?.id) {
+        await prisma.auditLog.create({
+          data: {
+            actorId: (session.user as any).id,
+            action: "UPDATE_TRIP",
+            entityType: "Trip",
+            entityId: params.id,
+            details: JSON.stringify(body),
+          },
+        });
+      }
+    } catch (auditErr) {
+      console.warn("Audit log skipped:", auditErr);
+    }
 
     return NextResponse.json(trip);
   } catch (e: any) {

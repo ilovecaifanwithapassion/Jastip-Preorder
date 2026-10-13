@@ -57,6 +57,8 @@ export default function AdminTripsPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [editingTrip, setEditingTrip] = useState<any>(null);
+  const [savingEdit, setSavingEdit] = useState(false);
 
   const fetchTrips = async () => {
     setLoading(true);
@@ -310,6 +312,21 @@ export default function AdminTripsPage() {
 
                       <td className="py-4 px-4 text-right">
                         <div className="flex items-center justify-end gap-1.5">
+                          <button
+                            onClick={() => {
+                              setEditingTrip({
+                                ...trip,
+                                departureDate: trip.departureDate ? new Date(trip.departureDate).toISOString().split("T")[0] : "",
+                                returnDate: trip.returnDate ? new Date(trip.returnDate).toISOString().split("T")[0] : "",
+                                orderDeadline: trip.orderDeadline ? new Date(trip.orderDeadline).toISOString().split("T")[0] : "",
+                                description: (trip as any).description || "",
+                              });
+                            }}
+                            title="Edit detail trip"
+                            className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
                           <Link
                             href={`/trips/${trip.id}`}
                             target="_blank"
@@ -339,6 +356,190 @@ export default function AdminTripsPage() {
                 })}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Trip Modal */}
+      {editingTrip && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-100 my-8 space-y-6">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                  <Edit className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-slate-900">Edit Detail Trip</h3>
+                  <p className="text-xs text-slate-500">Perbarui jadwal, destinasi, kurs, dan biaya jastip.</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setEditingTrip(null)}
+                className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                setSavingEdit(true);
+                try {
+                  const res = await fetch(`/api/admin/trips/${editingTrip.id}`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(editingTrip),
+                  });
+                  if (res.ok) {
+                    const updated = await res.json();
+                    setTrips((prev) => prev.map((t) => (t.id === updated.id ? { ...t, ...updated } : t)));
+                    setEditingTrip(null);
+                    alert("Perubahan trip berhasil disimpan!");
+                  } else {
+                    const err = await res.json();
+                    alert(err.error || "Gagal menyimpan perubahan trip.");
+                  }
+                } catch (err) {
+                  alert("Terjadi kesalahan jaringan.");
+                } finally {
+                  setSavingEdit(false);
+                }
+              }}
+              className="space-y-4"
+            >
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Judul Trip *</label>
+                <input
+                  type="text"
+                  required
+                  value={editingTrip.title}
+                  onChange={(e) => setEditingTrip({ ...editingTrip, title: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Negara Destinasi</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingTrip.destinationCountry}
+                    onChange={(e) => setEditingTrip({ ...editingTrip, destinationCountry: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Kota Destinasi</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingTrip.destinationCity}
+                    onChange={(e) => setEditingTrip({ ...editingTrip, destinationCity: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Berangkat</label>
+                  <input
+                    type="date"
+                    required
+                    value={editingTrip.departureDate}
+                    onChange={(e) => setEditingTrip({ ...editingTrip, departureDate: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Pulang</label>
+                  <input
+                    type="date"
+                    required
+                    value={editingTrip.returnDate}
+                    onChange={(e) => setEditingTrip({ ...editingTrip, returnDate: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Deadline PO</label>
+                  <input
+                    type="date"
+                    required
+                    value={editingTrip.orderDeadline}
+                    onChange={(e) => setEditingTrip({ ...editingTrip, orderDeadline: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Mata Uang</label>
+                  <select
+                    value={editingTrip.purchaseCurrency}
+                    onChange={(e) => setEditingTrip({ ...editingTrip, purchaseCurrency: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-bold"
+                  >
+                    <option value="SGD">SGD (Singapura)</option>
+                    <option value="JPY">JPY (Jepang)</option>
+                    <option value="KRW">KRW (Korea)</option>
+                    <option value="HKD">HKD (Hong Kong)</option>
+                    <option value="USD">USD (Dolar AS)</option>
+                    <option value="EUR">EUR (Euro)</option>
+                    <option value="THB">THB (Thailand)</option>
+                    <option value="MYR">MYR (Malaysia)</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Service Fee (%)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.5"
+                    value={editingTrip.serviceFeePercent}
+                    onChange={(e) => setEditingTrip({ ...editingTrip, serviceFeePercent: parseFloat(e.target.value) || 0 })}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Status Trip</label>
+                  <select
+                    value={editingTrip.status}
+                    onChange={(e) => setEditingTrip({ ...editingTrip, status: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-bold"
+                  >
+                    <option value="DRAFT">Draft</option>
+                    <option value="PUBLISHED">Published</option>
+                    <option value="OPEN">Buka PO (Open)</option>
+                    <option value="CLOSED">Tutup PO (Closed)</option>
+                    <option value="IN_PROGRESS">Berjalan</option>
+                    <option value="COMPLETED">Selesai</option>
+                    <option value="CANCELLED">Dibatalkan</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setEditingTrip(null)}
+                  className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs transition"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={savingEdit}
+                  className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md transition disabled:opacity-50 flex items-center gap-2"
+                >
+                  {savingEdit ? "Menyimpan..." : "Simpan Perubahan"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

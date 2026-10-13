@@ -64,6 +64,7 @@ export default function AdminNewTripPage() {
         throw new Error(data.error || "Gagal membuat trip baru.");
       }
 
+      router.refresh();
       router.push("/admin/trips");
     } catch (err: any) {
       setError(err.message);
