@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jastip Preorder - Titip Belanja Luar Negeri Terpercaya</title>
+  <meta name="description" content="Platform pre-order jastip terpercaya untuk titip belanja barang original dari Singapura, Jepang, Korea Selatan, dan seluruh dunia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 text-white text-xs font-semibold py-2 px-4 text-center">
+    ✈️ Trip Terbuka: <span class="font-bold underline">Singapore Jewel Trip</span> (Closing 3 Hari Lagi) &middot; 100% Produk Original & Dijamin Aman!
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-md shadow-indigo-500/20">
+          J
+        </div>
+        <div>
+          <span class="font-black text-lg text-slate-900 tracking-tight block leading-tight">JastipPreorder</span>
+          <span class="text-[10px] text-indigo-600 font-bold uppercase tracking-wider block">Personal Shopper</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+        <a href="#trips" class="hover:text-indigo-600 transition-colors">Jadwal Trip</a>
+        <a href="#products" class="hover:text-indigo-600 transition-colors">Katalog Produk</a>
+        <a href="#currency" class="hover:text-indigo-600 transition-colors flex items-center gap-1.5 text-indigo-600">
+          <i data-lucide="calculator" class="w-4 h-4"></i>
+          <span>Kurs Live</span>
+        </a>
+        <a href="#custom-request" class="hover:text-indigo-600 transition-colors">Custom Request</a>
+        <a href="#faq" class="hover:text-indigo-600 transition-colors">FAQ</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <button onclick="toggleCart()" class="relative p-2.5 rounded-xl border border-slate-200 hover:border-indigo-600 text-slate-700 hover:text-indigo-600 transition-all bg-white shadow-sm">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-indigo-600 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+        </button>
+        <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Jastip%2C%20saya%20ingin%20tanya%20jadwal%20titip%20belanja" target="_blank" class="hidden sm:inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md shadow-emerald-600/20 transition-all">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Chat WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative overflow-hidden pt-12 pb-16 lg:pt-20 lg:pb-24 bg-gradient-to-b from-indigo-50/70 via-white to-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-100/80 border border-indigo-200/60 text-indigo-700 text-xs font-bold">
+            <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Layanan Jasa Titip Internasional & Domestik
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+            Titip Belanja Luar Negeri <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Aman, Asli & Terpercaya.</span>
+          </h1>
+          <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            Dapatkan produk eksklusif dari Singapura, Jepang, Korea, & Eropa tanpa repot terbang keluar negeri. Hand-carry langsung, jaminan 100% original dengan kurs transparan.
+          </p>
+          <div class="flex flex-wrap gap-3 justify-center lg:justify-start pt-2">
+            <a href="#products" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-indigo-600/30 transition-all">
+              <span>Mulai Belanja</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+            <button onclick="openCustomRequestModal()" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-bold px-6 py-3.5 rounded-xl shadow-sm transition-all">
+              <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
+              <span>Titip Barang Khusus</span>
+            </button>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-200/80 max-w-lg mx-auto lg:mx-0">
+            <div>
+              <div class="text-xl sm:text-2xl font-black text-slate-900">100%</div>
+              <div class="text-xs text-slate-500 font-medium">Jaminan Original</div>
+            </div>
+            <div>
+              <div class="text-xl sm:text-2xl font-black text-slate-900">500+</div>
+              <div class="text-xs text-slate-500 font-medium">Pesanan Terkirim</div>
+            </div>
+            <div>
+              <div class="text-xl sm:text-2xl font-black text-slate-900">Live Rate</div>
+              <div class="text-xs text-slate-500 font-medium">Kurs Real-Time</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 relative">
+          <div class="relative mx-auto max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100 space-y-5">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Trip Aktif Sekarang</span>
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">OPEN PO</span>
+            </div>
+            <div class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900">
+              <img src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&auto=format&fit=crop&q=80" alt="Singapore" class="w-full h-full object-cover opacity-90">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-5 text-white">
+                <span class="text-xs font-bold text-indigo-300">🇸🇬 Singapura &middot; Jewel & Orchard</span>
+                <h3 class="text-xl font-bold">Singapore Weekend Shopping</h3>
+                <p class="text-xs text-slate-300 mt-1">Estimasi Tiba di Jakarta: 3 Hari Lagi</p>
+              </div>
+            </div>
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between py-1.5 border-b border-slate-100">
+                <span class="text-slate-500">Batas Akhir Order</span>
+                <span class="font-bold text-red-600">Besok, 23:59 WIB</span>
+              </div>
+              <div class="flex justify-between py-1.5 border-b border-slate-100">
+                <span class="text-slate-500">Jasa Titip Mulai Dari</span>
+                <span class="font-bold text-slate-900">Rp 25.000 / item</span>
+              </div>
+            </div>
+            <a href="#products" class="w-full block text-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl text-xs transition-all shadow-md shadow-indigo-600/20">
+              Lihat Produk Trip Ini
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE CURRENCY CONVERTER SECTION -->
+  <section id="currency" class="py-14 bg-white border-y border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold mb-3">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin"></i>
+          Live Real-Time Forex Calculator
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Kalkulator Kurs & Mata Uang Jastip</h2>
+        <p class="text-sm text-slate-600 mt-2">
+          Hitung estimasi rupiah dari mata uang asing favorit seperti SGD, JPY, KRW, HKD, USD, dan EUR secara transparan.
+        </p>
+      </div>
+
+      <div class="max-w-4xl mx-auto bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          <div class="md:col-span-5 space-y-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Mata Uang Asal</label>
+            <div class="flex gap-2">
+              <select id="curr-select" onchange="convertCurrency()" class="bg-white border border-slate-300 rounded-xl px-3 py-3 text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-36">
+                <option value="SGD" selected>🇸🇬 SGD (Dolar Singapura)</option>
+                <option value="JPY">🇯🇵 JPY (Yen Jepang)</option>
+                <option value="KRW">🇰🇷 KRW (Won Korea)</option>
+                <option value="HKD">🇭🇰 HKD (Dolar Hong Kong)</option>
+                <option value="USD">🇺🇸 USD (Dolar AS)</option>
+                <option value="EUR">🇪🇺 EUR (Euro)</option>
+                <option value="MYR">🇲🇾 MYR (Ringgit Malaysia)</option>
+                <option value="THB">🇹🇭 THB (Baht Thailand)</option>
+              </select>
+              <input type="number" id="curr-amount" value="50" min="1" oninput="convertCurrency()" placeholder="Nominal" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+          </div>
+
+          <div class="md:col-span-2 flex justify-center">
+            <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+              <i data-lucide="arrow-right" class="w-5 h-5 hidden md:block"></i>
+              <i data-lucide="arrow-down" class="w-5 h-5 md:hidden"></i>
+            </div>
+          </div>
+
+          <div class="md:col-span-5 space-y-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Estimasi Rupiah (IDR)</label>
+            <div class="bg-white border border-indigo-200 rounded-xl px-4 py-3 shadow-sm flex items-center justify-between">
+              <div>
+                <span class="text-xs text-slate-400 block font-semibold">Total Konversi</span>
+                <span id="curr-result" class="text-xl sm:text-2xl font-black text-indigo-600">Rp 600.000</span>
+              </div>
+              <span id="rate-badge" class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-md">1 SGD ≈ Rp 12.000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-5 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="info" class="w-4 h-4 text-indigo-500"></i>
+            <span>Kurs referensi diperbarui secara berkala. Estimasi belum termasuk biaya jastip hand-carry.</span>
+          </div>
+          <button onclick="requestWithConvertedRate()" class="text-indigo-600 hover:text-indigo-700 font-bold flex items-center gap-1">
+            <span>Titip Barang dengan Nominal Ini</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRIPS SCHEDULE SECTION -->
+  <section id="trips" class="py-16 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 block mb-1">Destinasi Pilihan</span>
+          <h2 class="text-3xl font-extrabold text-slate-900">Jadwal Shopping Trip Mendatang</h2>
+        </div>
+        <p class="text-sm text-slate-500 mt-2 md:mt-0 max-w-md">
+          Pilih trip tujuan belanja Anda. Slot koper hand-carry terbatas untuk menjaga keaslian dan kondisi produk.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Trip 1 -->
+        <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col">
+          <div class="relative aspect-[16/10] bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=600&auto=format&fit=crop&q=80" alt="Singapore" class="w-full h-full object-cover">
+            <div class="absolute top-3 left-3 bg-emerald-500 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full shadow-sm">
+              Open Pre-Order
+            </div>
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg">
+              🇸🇬 Singapura
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div>
+              <h3 class="font-bold text-slate-900 text-lg">Singapore Jewel & Orchard Trip</h3>
+              <p class="text-xs text-slate-500 mt-1 line-clamp-2">Bacha Coffee, Charles & Keith, Pop Mart, Garrett Popcorn, parfum duty-free Changi.</p>
+            </div>
+            <div class="space-y-2 text-xs pt-3 border-t border-slate-100">
+              <div class="flex justify-between text-slate-600">
+                <span>Deadline Order</span>
+                <span class="font-bold text-slate-900">18 Okt 2026</span>
+              </div>
+              <div class="flex justify-between text-slate-600">
+                <span>Pengiriman ke Rumah</span>
+                <span class="font-bold text-indigo-600">22 Okt 2026</span>
+              </div>
+            </div>
+            <a href="#products" class="w-full text-center bg-slate-100 hover:bg-indigo-600 hover:text-white font-bold py-2.5 rounded-xl text-xs text-slate-700 transition-all">
+              Jelajahi Produk Trip
+            </a>
+          </div>
+        </div>
+
+        <!-- Trip 2 -->
+        <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col">
+          <div class="relative aspect-[16/10] bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=600&auto=format&fit=crop&q=80" alt="Tokyo Japan" class="w-full h-full object-cover">
+            <div class="absolute top-3 left-3 bg-emerald-500 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full shadow-sm">
+              Open Pre-Order
+            </div>
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg">
+              🇯🇵 Tokyo, Jepang
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div>
+              <h3 class="font-bold text-slate-900 text-lg">Tokyo Autumn Shopping Spree</h3>
+              <p class="text-xs text-slate-500 mt-1 line-clamp-2">Tokyo Banana, Don Quijote snacks, Matcha Kyoto, Uniqlo Japan exclusive, Shiseido.</p>
+            </div>
+            <div class="space-y-2 text-xs pt-3 border-t border-slate-100">
+              <div class="flex justify-between text-slate-600">
+                <span>Deadline Order</span>
+                <span class="font-bold text-slate-900">25 Okt 2026</span>
+              </div>
+              <div class="flex justify-between text-slate-600">
+                <span>Pengiriman ke Rumah</span>
+                <span class="font-bold text-indigo-600">30 Okt 2026</span>
+              </div>
+            </div>
+            <a href="#products" class="w-full text-center bg-slate-100 hover:bg-indigo-600 hover:text-white font-bold py-2.5 rounded-xl text-xs text-slate-700 transition-all">
+              Jelajahi Produk Trip
+            </a>
+          </div>
+        </div>
+
+        <!-- Trip 3 -->
+        <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col">
+          <div class="relative aspect-[16/10] bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=600&auto=format&fit=crop&q=80" alt="Seoul Korea" class="w-full h-full object-cover">
+            <div class="absolute top-3 left-3 bg-indigo-500 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full shadow-sm">
+              Upcoming Trip
+            </div>
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg">
+              🇰🇷 Seoul, Korea Selatan
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div>
+              <h3 class="font-bold text-slate-900 text-lg">Seoul K-Beauty & Streetwear</h3>
+              <p class="text-xs text-slate-500 mt-1 line-clamp-2">Olive Young best seller skincare, Gentle Monster sunglasses, Tamburins fragrance, Matin Kim.</p>
+            </div>
+            <div class="space-y-2 text-xs pt-3 border-t border-slate-100">
+              <div class="flex justify-between text-slate-600">
+                <span>Deadline Order</span>
+                <span class="font-bold text-slate-900">05 Nov 2026</span>
+              </div>
+              <div class="flex justify-between text-slate-600">
+                <span>Pengiriman ke Rumah</span>
+                <span class="font-bold text-indigo-600">12 Nov 2026</span>
+              </div>
+            </div>
+            <a href="#products" class="w-full text-center bg-slate-100 hover:bg-indigo-600 hover:text-white font-bold py-2.5 rounded-xl text-xs text-slate-700 transition-all">
+              Jelajahi Produk Trip
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS CATALOG SECTION -->
+  <section id="products" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 block mb-1">Katalog Pre-Order</span>
+        <h2 class="text-3xl font-extrabold text-slate-900">Produk Best Seller Jastip</h2>
+        <p class="text-sm text-slate-500 mt-2">
+          Pilihan oleh-oleh dan item hits yang paling banyak dititip. Harga sudah termasuk estimasi jasa titip.
+        </p>
+      </div>
+
+      <div id="product-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        <!-- Products will be injected by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOM REQUEST SECTION -->
+  <section id="custom-request" class="py-16 bg-gradient-to-br from-indigo-900 via-indigo-800 to-purple-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-6 space-y-5">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-indigo-200 text-xs font-bold">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+            Barang Idaman Tidak Ada di Katalog?
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            Punya Titipan Khusus? <br>
+            Kirimkan Foto & Link Barangnya!
+          </h2>
+          <p class="text-sm sm:text-base text-indigo-200 leading-relaxed">
+            Ingin titip sepatu limited edition, album K-pop, mainan Pop Mart, atau kosmetik langka? Berikan informasi barangnya, dan shopper kami akan langsung mencarikannya untuk Anda saat berada di luar negeri.
+          </p>
+          <ul class="space-y-2.5 text-sm text-indigo-100">
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+              <span>Foto struk belanja asli dilampirkan</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+              <span>Konfirmasi harga & kurs sebelum dibeli</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+              <span>Refund 100% bila barang out of stock</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-6">
+          <div class="bg-white rounded-3xl p-6 sm:p-8 text-slate-800 shadow-2xl">
+            <h3 class="font-extrabold text-xl text-slate-900 mb-1">Form Titip Barang Custom</h3>
+            <p class="text-xs text-slate-500 mb-5">Admin kami akan menghitungkan estimasi total harga & fee ke WhatsApp Anda.</p>
+
+            <form id="custom-request-form" onsubmit="submitCustomRequest(event)" class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nama Barang</label>
+                <input type="text" id="cr-item" required placeholder="Contoh: Gentle Monster Sunglasses Frida 01" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Negara Pembelian</label>
+                  <select id="cr-country" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
+                    <option value="Singapura">🇸🇬 Singapura</option>
+                    <option value="Jepang">🇯🇵 Jepang</option>
+                    <option value="Korea Selatan">🇰🇷 Korea Selatan</option>
+                    <option value="Hong Kong">🇭🇰 Hong Kong</option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Estimasi Budget</label>
+                  <input type="text" id="cr-budget" placeholder="Misal: Rp 3.500.000" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Link Produk / Catatan Spesifikasi</label>
+                <textarea id="cr-notes" rows="2" placeholder="Sertakan link website official, warna, size, varian..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+              </div>
+
+              <button type="submit" class="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-md shadow-emerald-600/20">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <span>Ajukan Titipan via WhatsApp</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 block mb-1">Bantuan & FAQ</span>
+        <h2 class="text-3xl font-extrabold text-slate-900">Pertanyaan yang Sering Diajukan</h2>
+      </div>
+
+      <div class="space-y-4">
+        <details class="group bg-slate-50 p-5 rounded-2xl border border-slate-200">
+          <summary class="flex justify-between items-center font-bold text-slate-800 cursor-pointer list-none text-sm sm:text-base">
+            <span>Bagaimana cara pembayaran pre-order jastip?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+            Pembayaran dilakukan melalui transfer bank / QRIS. Anda dapat membayar Down Payment (DP 50%) saat pemesanan dibuat, dan pelunasan saat barang tiba di Indonesia sebelum dikirim ke alamat Anda.
+          </p>
+        </details>
+
+        <details class="group bg-slate-50 p-5 rounded-2xl border border-slate-200">
+          <summary class="flex justify-between items-center font-bold text-slate-800 cursor-pointer list-none text-sm sm:text-base">
+            <span>Apakah barang dijamin 100% original?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+            Pasti! Semua barang dibeli langsung dari toko resmi/boutique resmi negara asal (misal Bacha Coffee ION Orchard, Don Quijote Shibuya, Olive Young Myeongdong) dan disertai receipt/struk fisik resmi.
+          </p>
+        </details>
+
+        <details class="group bg-slate-50 p-5 rounded-2xl border border-slate-200">
+          <summary class="flex justify-between items-center font-bold text-slate-800 cursor-pointer list-none text-sm sm:text-base">
+            <span>Bagaimana jika barang yang saya titip habis di toko?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+            Jika stok barang tidak tersedia di negara tujuan, uang yang telah Anda bayarkan akan kami refund 100% penuh tanpa potongan apa pun dalam waktu maksimal 1x24 jam.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-black text-base">J</div>
+            <span class="text-white font-bold text-base">JastipPreorder</span>
+          </div>
+          <p class="text-slate-400 leading-relaxed">
+            Layanan jasa titip terpercaya oleh Sidney Ganteng. Belanja aman, transparan, dan jaminan original dari berbagai penjuru dunia.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold uppercase tracking-wider mb-3">Trip Populer</h4>
+          <ul class="space-y-2">
+            <li><a href="#trips" class="hover:text-white transition-colors">Jastip Singapura (Changi/Orchard)</a></li>
+            <li><a href="#trips" class="hover:text-white transition-colors">Jastip Tokyo & Osaka Jepang</a></li>
+            <li><a href="#trips" class="hover:text-white transition-colors">Jastip Seoul Korea Selatan</a></li>
+            <li><a href="#trips" class="hover:text-white transition-colors">Jastip Bangkok Thailand</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold uppercase tracking-wider mb-3">Layanan</h4>
+          <ul class="space-y-2">
+            <li><a href="#currency" class="hover:text-white transition-colors">Cek Kurs Asing Real-Time</a></li>
+            <li><button onclick="openCustomRequestModal()" class="hover:text-white transition-colors text-left">Request Barang Custom</button></li>
+            <li><a href="#faq" class="hover:text-white transition-colors">Panduan Titip & FAQ</a></li>
+            <li><a href="https://wa.me/6281234567890" target="_blank" class="hover:text-white transition-colors">Hubungi Shopper</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold uppercase tracking-wider mb-3">Customer Support</h4>
+          <p class="leading-relaxed mb-3">Jam operasional: Setiap hari 09:00 - 22:00 WIB.</p>
+          <a href="https://wa.me/6281234567890" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl transition-all">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            <span>WhatsApp Admin (+6281234567890)</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-slate-800 text-center flex flex-col sm:flex-row justify-between items-center gap-3">
+        <span>&copy; 2026 JastipPreorder. All rights reserved. Managed by Sidney Ganteng.</span>
+        <span>Hosted via GitHub Pages &middot; Powered by Modern Web Standards</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SHOPPING CART DRAWER (MODAL) -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex justify-end">
+    <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col">
+      <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="shopping-bag" class="w-5 h-5 text-indigo-600"></i>
+          <h3 class="font-bold text-slate-900 text-base">Keranjang Titipan (<span id="drawer-count">0</span>)</h3>
+        </div>
+        <button onclick="toggleCart()" class="p-2 rounded-lg hover:bg-slate-100 text-slate-500">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div id="cart-items" class="p-5 flex-1 overflow-y-auto space-y-3">
+        <!-- Cart Items -->
+      </div>
+
+      <div class="p-5 border-t border-slate-100 bg-slate-50 space-y-3">
+        <div class="flex justify-between text-sm">
+          <span class="text-slate-500">Total Belanja (IDR)</span>
+          <span id="cart-total" class="font-black text-indigo-600 text-lg">Rp 0</span>
+        </div>
+        <button onclick="checkoutToWhatsApp()" class="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-md shadow-emerald-600/20">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Checkout via WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // Rates Cache & Initial Rates
+    const rates = {
+      SGD: 12050,
+      JPY: 108,
+      KRW: 11.8,
+      HKD: 2050,
+      USD: 16100,
+      EUR: 17450,
+      MYR: 3500,
+      THB: 440,
+    };
+
+    // Products Data
+    const products = [
+      {
+        id: 'p1',
+        title: 'Bacha Coffee 1910 Gift Box (12 Bags)',
+        country: 'Singapura',
+        flag: '🇸🇬',
+        priceForeign: 'SGD 32',
+        priceIdr: 435000,
+        image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&auto=format&fit=crop&q=80',
+        badge: 'Best Seller'
+      },
+      {
+        id: 'p2',
+        title: 'Tokyo Banana Classic Box (8 Pcs)',
+        country: 'Jepang',
+        flag: '🇯🇵',
+        priceForeign: 'JPY 1,180',
+        priceIdr: 185000,
+        image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=500&auto=format&fit=crop&q=80',
+        badge: 'Favorit'
+      },
+      {
+        id: 'p3',
+        title: 'Olive Young Round Lab Sunscreen 50ml',
+        country: 'Korea',
+        flag: '🇰🇷',
+        priceForeign: 'KRW 21,000',
+        priceIdr: 295000,
+        image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&auto=format&fit=crop&q=80',
+        badge: 'K-Beauty'
+      },
+      {
+        id: 'p4',
+        title: 'Charles & Keith Geometric Crossbody',
+        country: 'Singapura',
+        flag: '🇸🇬',
+        priceForeign: 'SGD 89',
+        priceIdr: 1150000,
+        image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&auto=format&fit=crop&q=80',
+        badge: 'Fashion'
+      },
+      {
+        id: 'p5',
+        title: 'Matcha Uji Kyoto Grade A (100g)',
+        country: 'Jepang',
+        flag: '🇯🇵',
+        priceForeign: 'JPY 2,200',
+        priceIdr: 290000,
+        image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500&auto=format&fit=crop&q=80',
+        badge: 'Authentic'
+      },
+      {
+        id: 'p6',
+        title: 'Pop Mart The Monsters Blind Box',
+        country: 'Singapura',
+        flag: '🇸🇬',
+        priceForeign: 'SGD 18',
+        priceIdr: 245000,
+        image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&auto=format&fit=crop&q=80',
+        badge: 'Trending'
+      },
+      {
+        id: 'p7',
+        title: 'Tamburins Perfume Hand Cream 30ml',
+        country: 'Korea',
+        flag: '🇰🇷',
+        priceForeign: 'KRW 28,000',
+        priceIdr: 380000,
+        image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=500&auto=format&fit=crop&q=80',
+        badge: 'Viral'
+      },
+      {
+        id: 'p8',
+        title: 'Garrett Popcorn Chicago Mix (Large)',
+        country: 'Singapura',
+        flag: '🇸🇬',
+        priceForeign: 'SGD 14',
+        priceIdr: 195000,
+        image: 'https://images.unsplash.com/photo-1578849278619-e73505e9610f?w=500&auto=format&fit=crop&q=80',
+        badge: 'Snack'
+      }
+    ];
+
+    let cart = [];
+
+    // Render Products
+    function renderProducts() {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = products.map(p => `
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col hover:shadow-lg transition-all group">
+          <div class="relative aspect-square bg-slate-100 overflow-hidden">
+            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-2.5 left-2.5 bg-indigo-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">${p.badge}</span>
+            <span class="absolute top-2.5 right-2.5 bg-white/90 backdrop-blur-sm text-slate-800 text-[11px] font-bold px-2 py-0.5 rounded-lg shadow-sm">${p.flag} ${p.country}</span>
+          </div>
+          <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <div class="text-[11px] text-slate-400 font-semibold">${p.priceForeign}</div>
+              <h4 class="font-bold text-slate-900 text-sm line-clamp-2 leading-snug mt-0.5">${p.title}</h4>
+            </div>
+            <div>
+              <div class="text-base font-black text-indigo-600">Rp ${p.priceIdr.toLocaleString('id-ID')}</div>
+              <button onclick="addToCart('${p.id}')" class="mt-2.5 w-full bg-slate-900 hover:bg-indigo-600 text-white text-xs font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>Titip Barang Ini</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // Currency Conversion
+    async function fetchLiveRates() {
+      try {
+        const res = await fetch('https://api.frankfurter.app/latest?to=IDR');
+        if (res.ok) {
+          const data = await res.json();
+          // EUR to IDR
+          if (data.rates && data.rates.IDR) {
+            rates.EUR = Math.round(data.rates.IDR);
+          }
+        }
+      } catch (err) {
+        console.log('Using backup rates');
+      }
+      convertCurrency();
+    }
+
+    function convertCurrency() {
+      const curr = document.getElementById('curr-select').value;
+      const amount = parseFloat(document.getElementById('curr-amount').value) || 0;
+      const rate = rates[curr] || 1;
+      const total = Math.round(amount * rate);
+
+      document.getElementById('curr-result').innerText = 'Rp ' + total.toLocaleString('id-ID');
+      document.getElementById('rate-badge').innerText = `1 ${curr} ≈ Rp ${Math.round(rate).toLocaleString('id-ID')}`;
+    }
+
+    function requestWithConvertedRate() {
+      const curr = document.getElementById('curr-select').value;
+      const amount = document.getElementById('curr-amount').value;
+      const total = document.getElementById('curr-result').innerText;
+      
+      const message = `Halo Admin Jastip Sidney, saya mau titip barang senilai ${amount} ${curr} (Estimasi ${total}). Mohon info ketersediaan slot jastip.`;
+      window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    // Cart Handlers
+    function addToCart(id) {
+      const prod = products.find(p => p.id === id);
+      if (!prod) return;
+      const existing = cart.find(c => c.id === id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...prod, qty: 1 });
+      }
+      updateCartUI();
+      toggleCart(true);
+    }
+
+    function updateCartUI() {
+      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cart-badge').innerText = totalCount;
+      document.getElementById('drawer-count').innerText = totalCount;
+
+      const itemsContainer = document.getElementById('cart-items');
+      if (cart.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="text-center py-12 text-slate-400">
+            <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto mb-3 opacity-30"></i>
+            <p class="text-sm font-semibold">Keranjang titipan masih kosong</p>
+            <p class="text-xs text-slate-400 mt-1">Pilih produk di katalog untuk mulai menitip</p>
+          </div>
+        `;
+      } else {
+        itemsContainer.innerHTML = cart.map(item => `
+          <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <img src="${item.image}" class="w-14 h-14 rounded-lg object-cover">
+            <div class="flex-1 min-w-0">
+              <h5 class="text-xs font-bold text-slate-800 truncate">${item.title}</h5>
+              <div class="text-xs font-black text-indigo-600 mt-0.5">Rp ${(item.priceIdr * item.qty).toLocaleString('id-ID')}</div>
+              <div class="flex items-center gap-2 mt-1">
+                <button onclick="changeQty('${item.id}', -1)" class="w-5 h-5 rounded bg-white border border-slate-300 text-xs font-bold flex items-center justify-center">-</button>
+                <span class="text-xs font-bold">${item.qty}</span>
+                <button onclick="changeQty('${item.id}', 1)" class="w-5 h-5 rounded bg-white border border-slate-300 text-xs font-bold flex items-center justify-center">+</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const totalPrice = cart.reduce((sum, item) => sum + (item.priceIdr * item.qty), 0);
+      document.getElementById('cart-total').innerText = 'Rp ' + totalPrice.toLocaleString('id-ID');
+      lucide.createIcons();
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(c => c.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(c => c.id !== id);
+      }
+      updateCartUI();
+    }
+
+    function toggleCart(forceOpen) {
+      const drawer = document.getElementById('cart-drawer');
+      if (forceOpen === true) {
+        drawer.classList.remove('hidden');
+      } else {
+        drawer.classList.toggle('hidden');
+      }
+    }
+
+    function checkoutToWhatsApp() {
+      if (cart.length === 0) {
+        alert('Keranjang masih kosong!');
+        return;
+      }
+      const totalPrice = cart.reduce((sum, item) => sum + (item.priceIdr * item.qty), 0);
+      let text = `*PESANAN PRE-ORDER JASTIP*\n\nHalo Admin Sidney, saya ingin memesan:\n`;
+      cart.forEach((item, idx) => {
+        text += `${idx + 1}. ${item.title} (${item.qty}x) = Rp ${(item.priceIdr * item.qty).toLocaleString('id-ID')}\n`;
+      });
+      text += `\n*TOTAL PESANAN:* Rp ${totalPrice.toLocaleString('id-ID')}\n\nMohon info rekening pembayaran dan ketersediaan kuota bagasi. Terima kasih!`;
+      window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function openCustomRequestModal() {
+      document.getElementById('custom-request').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function submitCustomRequest(e) {
+      e.preventDefault();
+      const item = document.getElementById('cr-item').value;
+      const country = document.getElementById('cr-country').value;
+      const budget = document.getElementById('cr-budget').value || '-';
+      const notes = document.getElementById('cr-notes').value || '-';
+
+      const message = `*CUSTOM PRE-ORDER JASTIP*\n\nHalo Admin Sidney, saya mau titip barang custom:\n- Nama Barang: ${item}\n- Negara Asal: ${country}\n- Estimasi Budget: ${budget}\n- Spesifikasi/Link: ${notes}\n\nMohon info apakah bisa dititipkan pada trip mendatang. Terima kasih!`;
+      window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+      updateCartUI();
+      fetchLiveRates();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
