@@ -1,0 +1,234 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String         @id @default(uuid())
+  email        String         @unique
+  passwordHash String
+  name         String
+  phone        String?
+  role         String         @default("CUSTOMER") // "CUSTOMER" | "ADMIN"
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  orders         Order[]
+  customRequests CustomRequest[]
+  auditLogs      AuditLog[]
+  statusUpdates  OrderStatusHistory[]
+  verifiedPayments Payment[]  @relation("AdminVerifier")
+}
+
+model Trip {
+  id                    String    @id @default(uuid())
+  title                 String
+  destinationCountry    String
+  destinationCity       String
+  originCity            String    @default("Jakarta")
+  departureDate         DateTime
+  returnDate            DateTime
+  orderOpenDate         DateTime
+  orderDeadline         DateTime
+  estimatedDeliveryDate DateTime
+  status                String    @default("DRAFT") // DRAFT, PUBLISHED, OPEN, CLOSED, IN_PROGRESS, COMPLETED, CANCELLED
+  description           String
+  coverImage            String?
+  purchaseCurrency      String    @default("SGD") // e.g. SGD, JPY, USD, THB
+  exchangeRateMode      String    @default("AUTO_LIVE") // AUTO_LIVE, MANUAL_OVERRIDE
+  manualExchangeRate    Float?
+  serviceFeePercent     Float     @default(10.0) // Service fee percentage
+  flatServiceFee        Float     @default(0.0)  // Additional flat service fee
+  termsAndNotes         String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  products       Product[]
+  orders         Order[]
+  customRequests CustomRequest[]
+}
+
+model Product {
+  id                 String           @id @default(uuid())
+  tripId             String
+  name               String
+  description        String
+  category           String           @default("General")
+  brand              String?
+  sourceStore        String?
+  externalUrl        String?
+  originalPrice      Float            // Price in trip purchaseCurrency
+  originalCurrency   String
+  quantityLimit      Int?
+  availabilityStatus String           @default("AVAILABLE") // AVAILABLE, LIMITED, OUT_OF_STOCK, UNAVAILABLE
+  images             String           // JSON string of image URLs
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  trip       Trip             @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  variants   ProductVariant[]
+  orderItems OrderItem[]
+}
+
+model ProductVariant {
+  id              String   @id @default(uuid())
+  productId       String
+  name            String   // e.g. "Size L", "Black", "50ml"
+  priceAdjustment Float    @default(0.0)
+  stockLimit      Int?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model CustomRequest {
+  id                  String    @id @default(uuid())
+  userId              String
+  tripId              String
+  productName         String
+  description         String
+  referenceUrl        String?
+  referenceImage      String?
+  quantity            Int       @default(1)
+  variantSpecs        String?
+  status              String    @default("SUBMITTED") // SUBMITTED, UNDER_REVIEW, QUOTED, ACCEPTED, DECLINED, CONVERTED_TO_ORDER
+  quotedOriginalPrice Float?   // In trip currency
+  quotedCustomerPrice Float?   // In customer payment currency
+  quotedServiceFee    Float?
+  quoteNotes          String?
+  quoteExpiresAt      DateTime?
+  convertedOrderId    String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id                 String          @id @default(uuid())
+  orderNumber        String          @unique // e.g. JST-20261013-0001
+  userId             String
+  tripId             String
+  fulfillmentStatus  String          @default("PENDING_REVIEW") 
+  // PENDING_REVIEW, AWAITING_PAYMENT, CONFIRMED, PURCHASING, PURCHASED, IN_TRANSIT, ARRIVED, READY_FOR_DELIVERY, COMPLETED, CANCELLED, REFUNDED
+  paymentStatus      String          @default("AWAITING_PAYMENT") 
+  // NOT_REQUIRED, AWAITING_PAYMENT, SUBMITTED_FOR_REVIEW, PAID_AND_VERIFIED, REJECTED, REFUNDED
+  customerName       String
+  customerPhone      String
+  deliveryAddress    String
+  deliveryNotes      String?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  user            User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trip            Trip                 @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  items           OrderItem[]
+  pricingSnapshot PricingSnapshot?
+  payments        Payment[]
+  statusHistory   OrderStatusHistory[]
+}
+
+model OrderItem {
+  id                String   @id @default(uuid())
+  orderId           String
+  productId         String?
+  productName       String
+  variantName       String?
+  quantity          Int
+  originalUnitPrice Float    // In trip currency
+  unitPrice         Float    // In customer currency
+  subtotal          Float    // In customer currency
+  createdAt         DateTime @default(now())
+
+  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+}
+
+model PricingSnapshot {
+  id                 String   @id @default(uuid())
+  orderId            String   @unique
+  subtotal           Float
+  serviceFee         Float
+  shippingFee        Float
+  taxesOrDuties      Float
+  totalPayable       Float
+  currency           String   @default("IDR")
+  tripCurrency       String
+  exchangeRate       Float
+  exchangeRateSource String   // e.g. "Live API (Frankfurter)", "Admin Manual Override"
+  rateTimestamp      DateTime
+  confirmedAt        DateTime @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id                String    @id @default(uuid())
+  orderId           String
+  amount            Float
+  currency          String    @default("IDR")
+  method            String    @default("MANUAL_BANK_TRANSFER") // MANUAL_BANK_TRANSFER, QRIS
+  proofImageUrl     String?
+  referenceNotes    String?
+  status            String    @default("SUBMITTED") // SUBMITTED, VERIFIED, REJECTED
+  rejectionReason   String?
+  verifiedByAdminId String?
+  verifiedAt        DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  order            Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  verifiedByAdmin  User? @relation("AdminVerifier", fields: [verifiedByAdminId], references: [id], onDelete: SetNull)
+}
+
+model OrderStatusHistory {
+  id             String   @id @default(uuid())
+  orderId        String
+  actorId        String
+  type           String   // "FULFILLMENT" | "PAYMENT"
+  previousStatus String
+  newStatus      String
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  actor User  @relation(fields: [actorId], references: [id], onDelete: Cascade)
+}
+
+model ExchangeRateCache {
+  id           String   @id @default(uuid())
+  fromCurrency String
+  toCurrency   String
+  rate         Float
+  provider     String   @default("Frankfurter")
+  retrievedAt  DateTime @default(now())
+  expiresAt    DateTime
+
+  @@unique([fromCurrency, toCurrency])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  actorId    String
+  action     String   // e.g. "CANCEL_TRIP", "VERIFY_PAYMENT", "UPDATE_PRICE", "MANUAL_RATE_SET"
+  entityType String   // "Trip", "Order", "Payment", "Product"
+  entityId   String
+  details    String   // JSON string of change diff
+  createdAt  DateTime @default(now())
+
+  actor User @relation(fields: [actorId], references: [id], onDelete: Cascade)
+}
+
+model SystemSetting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+}
